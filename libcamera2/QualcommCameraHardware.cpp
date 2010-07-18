@@ -58,8 +58,8 @@ extern "C" {
 #define THUMBNAIL_HEIGHT       384
 #define THUMBNAIL_WIDTH_STR   "512"
 #define THUMBNAIL_HEIGHT_STR  "384"
-#define DEFAULT_PICTURE_WIDTH  2048 // 1280
-#define DEFAULT_PICTURE_HEIGHT 1536 // 768
+#define DEFAULT_PICTURE_WIDTH  2592 // 1280
+#define DEFAULT_PICTURE_HEIGHT 1936 // 768
 #define THUMBNAIL_BUFFER_SIZE (THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT * 3/2)
 
 #define DEFAULT_PREVIEW_SETTING 2 // HVGA
@@ -279,7 +279,7 @@ void QualcommCameraHardware::initDefaultParameters()
     p.set("antibanding-values", antibanding_values);
     p.set("effect-values", effect_values);
     p.set("whitebalance-values", whitebalance_values);
-    p.set("picture-size-values", "2048x1536,1600x1200,1024x768");
+    p.set("picture-size-values", ",2592x1936,2304x1728,2048x1536,1600x1200,1024x768");
 
     if (setParameters(p) != NO_ERROR) {
         LOGE("Failed to set default parameters?!");
@@ -646,11 +646,11 @@ bool QualcommCameraHardware::native_set_parm(
     ctrlCmd.resp_fd    = mCameraControlFd;
     ctrlCmd.value = value;
 
-    LOGV("native_set_parm. camfd=%d, type=%d, length=%d",
+    LOGV("native_set_parm. camfd=%d, type=%d, length=%d, zoom=%d",
          mCameraControlFd, type, length);
     rc = ioctl(mCameraControlFd, MSM_CAM_IOCTL_CTRL_COMMAND, &ctrlCmd);
     if(rc < 0 || ctrlCmd.status != CAM_CTRL_SUCCESS) {
-        LOGE("ioctl error. camfd=%d, type=%d, length=%d, rc=%d, ctrlCmd.status=%d, %s",
+        LOGE("ioctl error. camfd=%d, type=%d, length=%d, zoom=%d, rc=%d, ctrlCmd.status=%d, %s",
              mCameraControlFd, type, length, rc, ctrlCmd.status, strerror(errno));
         return false;
     }
